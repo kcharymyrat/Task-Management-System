@@ -1,0 +1,221 @@
+type: edu
+files:
+  - name: src/resources/application.properties
+    visible: true
+    text: |
+      spring.datasource.url=jdbc:h2:file:../tms_db
+      spring.datasource.driverClassName=org.h2.Driver
+      spring.datasource.username=sa
+      spring.datasource.password=sa
+      
+      spring.jpa.hibernate.ddl-auto=update
+      
+      spring.h2.console.enabled=true
+      spring.h2.console.settings.trace=false
+      spring.h2.console.settings.web-allow-others=false
+      
+      management.endpoints.web.exposure.include=*
+      management.endpoint.shutdown.enabled=true
+    learner_created: false
+  - name: src/taskmanagement/Application.java
+    visible: true
+    text: |
+      package taskmanagement;
+      
+      import org.springframework.boot.SpringApplication;
+      import org.springframework.boot.autoconfigure.SpringBootApplication;
+      
+      @SpringBootApplication
+      public class Application {
+          public static void main(String[] args) {
+              SpringApplication.run(Application.class, args);
+          }
+      }
+    learner_created: false
+  - name: test/ApplicationTests.java
+    visible: false
+    text: |
+      import com.google.gson.Gson;
+      import org.hyperskill.hstest.dynamic.DynamicTest;
+      import org.hyperskill.hstest.dynamic.input.DynamicTesting;
+      import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+      import org.hyperskill.hstest.mocks.web.response.HttpResponse;
+      import org.hyperskill.hstest.stage.SpringTest;
+      import org.hyperskill.hstest.testcase.CheckResult;
+      
+      public class ApplicationTests extends SpringTest {
+          private static final String accountsUrl = "/api/accounts";
+          private static final String tasksUrl = "/api/tasks";
+          private final Gson gson = new Gson();
+      
+          public ApplicationTests() {
+              super("../tms_db.mv.db");
+          }
+      
+          CheckResult testCreateUser(TestUser user, int expectedCode) {
+              var content = gson.toJson(user);
+              var response = post(accountsUrl, content).send();
+      
+              checkResponseStatus(response, expectedCode);
+      
+              return CheckResult.correct();
+          }
+      
+          CheckResult testGetTasks(TestUser user, int expectedCode) {
+              var response = get(tasksUrl).basicAuth(user.email(), user.password()).send();
+      
+              checkResponseStatus(response, expectedCode);
+      
+              return CheckResult.correct();
+          }
+      
+          private void checkResponseStatus(HttpResponse response, int expectedCode) {
+              var uri = response.getRequest().getUri();
+              var method = response.getRequest().getMethod();
+              var requestBody = response.getRequest().getContent();
+              var statusCode = response.getStatusCode();
+              var responseBody = response.getContent();
+              if (statusCode != expectedCode) {
+                  throw new WrongAnswer("""
+                          Request: %s %s
+                          Request body: %s
+                          Expected status code %d but received %d
+                          Response body: %s
+                          """.formatted(method, uri, requestBody, expectedCode, statusCode, responseBody)
+                  );
+              }
+          }
+      
+          private CheckResult reloadServer() {
+              try {
+                  reloadSpring();
+              } catch (Exception e) {
+                  throw new WrongAnswer("Failed to reload application");
+              }
+              return CheckResult.correct();
+          }
+      
+          @DynamicTest
+          DynamicTesting[] dt = new DynamicTesting[]{
+                  // test user registration
+                  () -> testCreateUser(TestUser.alice(), 200),
+                  () -> testCreateUser(TestUser.alice(), 409),
+                  () -> testCreateUser(TestUser.alice().withEmail("ALICE@email.com"), 409),
+                  () -> testCreateUser(TestUser.bob(), 200),
+                  () -> testCreateUser(TestUser.withBadEmail(" "), 400),
+                  () -> testCreateUser(TestUser.withBadEmail(null), 400),
+                  () -> testCreateUser(TestUser.withBadEmail("malformed@email."), 400),
+                  () -> testCreateUser(TestUser.withBadPassword(null), 400),
+                  () -> testCreateUser(TestUser.withBadPassword("      "), 400),
+                  () -> testCreateUser(TestUser.withBadPassword("12345"), 400),
+      
+                  // test API access
+                  () -> testGetTasks(TestUser.alice(), 200),
+                  () -> testGetTasks(TestUser.bob(), 200),
+                  () -> testGetTasks(TestUser.alice().withEmail("alice@test.com"), 401),
+                  () -> testGetTasks(TestUser.alice().withEmail("ALICE@email.com"), 200),
+                  () -> testGetTasks(TestUser.alice().withPassword("Password"), 401),
+      
+                  // test persistence
+                  this::reloadServer,
+                  () -> testCreateUser(TestUser.alice(), 409),
+                  () -> testGetTasks(TestUser.alice(), 200),
+          };
+      }
+    learner_created: false
+  - name: test/TestUser.java
+    visible: false
+    text: |
+      public record TestUser(String email, String password) {
+          public static TestUser alice() {
+              return new TestUser("alice@email.com", "password");
+          }
+      
+          public static TestUser bob() {
+              return new TestUser("bob@example.com", "123456");
+          }
+      
+          public static TestUser withBadEmail(String badEmail) {
+              return new TestUser(badEmail, "password");
+          }
+      
+          public static TestUser withBadPassword(String badPassword) {
+              return new TestUser("test@test.com", badPassword);
+          }
+      
+          public TestUser withEmail(String email) {
+              return new TestUser(email, this.password);
+          }
+      
+          public TestUser withPassword(String password) {
+              return new TestUser(this.email, password);
+          }
+      }
+    learner_created: false
+  - name: build.gradle
+    visible: true
+    text: |
+      buildscript {
+          apply plugin: 'hyperskill'
+      
+          repositories {
+              mavenCentral()
+          }
+      
+          dependencies {
+              classpath "org.springframework.boot:spring-boot-gradle-plugin:$hs.spring.bootVersion"
+              classpath "io.spring.gradle:dependency-management-plugin:$hs.spring.dependencyManagementVersion"
+          }
+      }
+      
+      apply plugin: 'java'
+      apply plugin: 'org.springframework.boot'
+      apply plugin: 'io.spring.dependency-management'
+      
+      repositories {
+          mavenCentral()
+      }
+      
+      sourceSets.main.resources.srcDirs = ["src/resources"]
+      
+      dependencies {
+          implementation 'org.springframework.boot:spring-boot-starter'
+          implementation 'org.springframework.boot:spring-boot-starter-actuator'
+          implementation 'org.springframework.boot:spring-boot-starter-web'
+          implementation 'org.springframework.boot:spring-boot-starter-security'
+          implementation 'org.springframework.boot:spring-boot-starter-validation'
+          implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+          runtimeOnly 'com.h2database:h2'
+      }
+      
+      test {
+          jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+      }
+    learner_created: false
+  - name: src/taskmanagement/configs/SecurityConfigs.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/controllers/AppController.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/dtos/RegistrationRequest.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUser.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserRepository.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserDetailsImpl.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserDetailsServiceImpl.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/projects/423/stages/2459/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 25 Feb 2024 15:55:19 UTC"
+record: -1

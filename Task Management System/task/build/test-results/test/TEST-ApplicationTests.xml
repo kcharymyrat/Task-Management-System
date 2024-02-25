@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-02-25T15:54:55" hostname="WIN-PK97IO7J39D" time="23.102">
+  <properties/>
+  <testcase name="start" classname="ApplicationTests" time="23.102"/>
+  <system-out><![CDATA[?[1;31m
+Start test 1?[0m
+?[0;34m
+?[0m?[0;34m  .   ____          _            __ _ _
+?[0m?[0;34m /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+?[0m?[0;34m( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+?[0m?[0;34m \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+?[0m?[0;34m  '  |____| .__|_| |_|_| |_\__, | / / / /
+?[0m?[0;34m =========|_|==============|___/=/_/_/_/
+?[0m?[0;34m :: Spring Boot ::                (v3.0.2)
+?[0m?[0;34m
+?[0m?[0;34m2024-02-25T20:54:56.533+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : Starting Application using Java 17.0.5 with PID 11520 (started by User in D:\JetBrainsWork\Task Management System\Task Management System\task)
+?[0m?[0;34m2024-02-25T20:54:56.538+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : No active profile set, falling back to 1 default profile: "default"
+?[0m?[0;34m2024-02-25T20:54:58.265+05:00  INFO 11520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+?[0m?[0;34m2024-02-25T20:54:58.357+05:00  INFO 11520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 1 JPA repository interfaces.
+?[0m?[0;34m2024-02-25T20:54:59.264+05:00  INFO 11520 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+?[0m?[0;34m2024-02-25T20:54:59.280+05:00  INFO 11520 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+?[0m?[0;34m2024-02-25T20:54:59.281+05:00  INFO 11520 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
+?[0m?[0;34m2024-02-25T20:54:59.393+05:00  INFO 11520 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+?[0m?[0;34m2024-02-25T20:54:59.397+05:00  INFO 11520 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2792 ms
+?[0m?[0;34m2024-02-25T20:54:59.542+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+?[0m?[0;34m2024-02-25T20:54:59.906+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:../tms_db user=SA
+?[0m?[0;34m2024-02-25T20:54:59.911+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+?[0m?[0;34m2024-02-25T20:54:59.929+05:00  INFO 11520 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:../tms_db'
+?[0m?[0;34m2024-02-25T20:55:00.255+05:00  INFO 11520 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+?[0m?[0;34m2024-02-25T20:55:00.336+05:00  INFO 11520 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
+?[0m?[0;34m2024-02-25T20:55:00.606+05:00  WARN 11520 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+?[0m?[0;34m2024-02-25T20:55:00.840+05:00  INFO 11520 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+?[0m?[0;34m2024-02-25T20:55:02.137+05:00  INFO 11520 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+?[0m?[0;34m2024-02-25T20:55:02.147+05:00  INFO 11520 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+?[0m?[0;34m2024-02-25T20:55:02.590+05:00  WARN 11520 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+?[0m?[0;34m2024-02-25T20:55:03.237+05:00  INFO 11520 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+?[0m?[0;34m2024-02-25T20:55:03.313+05:00  INFO 11520 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@25cef4b3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5e783f78, org.springframework.security.web.context.SecurityContextHolderFilter@5ff12345, org.springframework.security.web.header.HeaderWriterFilter@6e4ac3f5, org.springframework.security.web.authentication.logout.LogoutFilter@2e0de20d, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3d3c14c3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@74fda9ed, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@19ce597a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5bdef8ee, org.springframework.security.web.session.SessionManagementFilter@4628f386, org.springframework.security.web.access.ExceptionTranslationFilter@6b8683b8, org.springframework.security.web.access.intercept.AuthorizationFilter@2fda92e0]
+?[0m?[0;34m2024-02-25T20:55:03.811+05:00  INFO 11520 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+?[0m?[0;34m2024-02-25T20:55:03.831+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : Started Application in 7.85 seconds (process running for 9.03)
+?[0;34m2024-02-25T20:55:04.299+05:00  INFO 11520 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+?[0m?[0;34m2024-02-25T20:55:04.300+05:00  INFO 11520 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+?[0m?[0;34m2024-02-25T20:55:04.303+05:00  INFO 11520 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+?[0m?[1;31m
+Start test 2?[0m
+?[1;31m
+Start test 3?[0m
+?[1;31m
+Start test 4?[0m
+?[1;31m
+Start test 5?[0m
+?[1;31m
+Start test 6?[0m
+?[1;31m
+Start test 7?[0m
+?[1;31m
+Start test 8?[0m
+?[1;31m
+Start test 9?[0m
+?[1;31m
+Start test 10?[0m
+?[1;31m
+Start test 11?[0m
+?[0m?[0;34mUsername: alice@email.com
+?[0m?[0;34mUser has authorities/roles: [ROLE_USER]
+?[1;31m
+Start test 12?[0m
+?[0;34mUsername: bob@example.com
+?[0m?[0;34mUser has authorities/roles: [ROLE_USER]
+?[1;31m
+Start test 13?[0m
+?[1;31m
+Start test 14?[0m
+?[0;34mUsername: alice@email.com
+?[0m?[0;34mUser has authorities/roles: [ROLE_USER]
+?[1;31m
+Start test 15?[0m
+?[1;31m
+Start test 16?[0m
+?[0;34m2024-02-25T20:55:06.348+05:00  INFO 11520 --- [       Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+?[0m?[0;34m2024-02-25T20:55:06.351+05:00  INFO 11520 --- [       Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+?[0m?[0;34m2024-02-25T20:55:06.365+05:00  INFO 11520 --- [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+?[0m?[0;34m2024-02-25T20:55:06.369+05:00  INFO 11520 --- [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+?[0m?[0;34m2024-02-25T20:55:06.452+05:00  INFO 11520 --- [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+?[0;34m
+?[0m?[0;34m  .   ____          _            __ _ _
+?[0m?[0;34m /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+?[0m?[0;34m( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+?[0m?[0;34m \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+?[0m?[0;34m  '  |____| .__|_| |_|_| |_\__, | / / / /
+?[0m?[0;34m =========|_|==============|___/=/_/_/_/
+?[0m?[0;34m :: Spring Boot ::                (v3.0.2)
+?[0m?[0;34m
+?[0m?[0;34m2024-02-25T20:55:16.967+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : Starting Application using Java 17.0.5 with PID 11520 (started by User in D:\JetBrainsWork\Task Management System\Task Management System\task)
+?[0m?[0;34m2024-02-25T20:55:16.969+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : No active profile set, falling back to 1 default profile: "default"
+?[0m?[0;34m2024-02-25T20:55:17.496+05:00  INFO 11520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+?[0m?[0;34m2024-02-25T20:55:17.505+05:00  INFO 11520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 1 JPA repository interfaces.
+?[0m?[0;34m2024-02-25T20:55:17.649+05:00  INFO 11520 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+?[0m?[0;34m2024-02-25T20:55:17.651+05:00  INFO 11520 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+?[0m?[0;34m2024-02-25T20:55:17.652+05:00  INFO 11520 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
+?[0m?[0;34m2024-02-25T20:55:17.688+05:00  INFO 11520 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+?[0m?[0;34m2024-02-25T20:55:17.688+05:00  INFO 11520 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 715 ms
+?[0m?[0;34m2024-02-25T20:55:17.736+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+?[0m?[0;34m2024-02-25T20:55:17.753+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:file:../tms_db user=SA
+?[0m?[0;34m2024-02-25T20:55:17.754+05:00  INFO 11520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+?[0m?[0;34m2024-02-25T20:55:17.754+05:00  INFO 11520 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:../tms_db'
+?[0m?[0;34m2024-02-25T20:55:17.815+05:00  INFO 11520 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+?[0m?[0;34m2024-02-25T20:55:17.827+05:00  WARN 11520 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+?[0m?[0;34m2024-02-25T20:55:17.836+05:00  INFO 11520 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+?[0m?[0;34m2024-02-25T20:55:17.970+05:00  INFO 11520 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+?[0m?[0;34m2024-02-25T20:55:17.971+05:00  INFO 11520 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+?[0m?[0;34m2024-02-25T20:55:18.058+05:00  WARN 11520 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+?[0m?[0;34m2024-02-25T20:55:18.217+05:00  INFO 11520 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+?[0m?[0;34m2024-02-25T20:55:18.236+05:00  INFO 11520 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@22bd6b0a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@221383c9, org.springframework.security.web.context.SecurityContextHolderFilter@35abfeba, org.springframework.security.web.header.HeaderWriterFilter@53f67af6, org.springframework.security.web.authentication.logout.LogoutFilter@4268c16, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@673ce246, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b031f53, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b42eb0f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a389b39, org.springframework.security.web.session.SessionManagementFilter@5a85f41b, org.springframework.security.web.access.ExceptionTranslationFilter@2d2c794d, org.springframework.security.web.access.intercept.AuthorizationFilter@124b1369]
+?[0m?[0;34m2024-02-25T20:55:18.353+05:00  INFO 11520 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+?[0m?[0;34m2024-02-25T20:55:18.362+05:00  INFO 11520 --- [    Test worker] taskmanagement.Application               : Started Application in 1.459 seconds (process running for 23.561)
+?[0m?[1;31m
+Start test 17?[0m
+?[0;34m2024-02-25T20:55:18.374+05:00  INFO 11520 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+?[0m?[0;34m2024-02-25T20:55:18.375+05:00  INFO 11520 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+?[0m?[0;34m2024-02-25T20:55:18.378+05:00  INFO 11520 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+?[1;31m
+Start test 18?[0m
+?[0;34mUsername: alice@email.com
+?[0m?[0;34mUser has authorities/roles: [ROLE_USER]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
