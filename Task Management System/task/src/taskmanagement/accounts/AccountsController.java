@@ -1,30 +1,22 @@
-package taskmanagement.controllers;
+package taskmanagement.accounts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import taskmanagement.accounts.AppUser;
-import taskmanagement.accounts.AppUserDetailsServiceImpl;
-import taskmanagement.accounts.AppUserRepository;
-import taskmanagement.dtos.RegistrationRequest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
-public class AppController {
+public class AccountsController {
 
     private final AppUserDetailsServiceImpl userService;
 
     @Autowired
-    public AppController(AppUserDetailsServiceImpl userService) {
+    public AccountsController(AppUserDetailsServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -58,16 +50,6 @@ public class AppController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    @GetMapping("/api/tasks")
-    public ResponseEntity<?> getTasks(@AuthenticationPrincipal UserDetails details) {
-
-        System.out.println("Username: " + details.getUsername());
-        System.out.println("User has authorities/roles: " + details.getAuthorities());
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
 
     private boolean isValidEmail(String email) {
         final String EMAIL_REGEX =

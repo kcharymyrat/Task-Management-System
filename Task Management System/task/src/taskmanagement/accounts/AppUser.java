@@ -1,19 +1,34 @@
 package taskmanagement.accounts;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import taskmanagement.tasks.TaskEntity;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "app_users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
     private String username;
+
+    @NotNull
+    @NotBlank
     private String password;
-    private String authority;
+    private String authority = "ROLE_USER";
+
+    @OneToMany(mappedBy = "author")
+    private Set<TaskEntity> tasks = new HashSet<>();
 
     public AppUser() {
     }
@@ -45,5 +60,13 @@ public class AppUser {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public Set<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void addTask(TaskEntity task) {
+        this.tasks.add(task);
     }
 }

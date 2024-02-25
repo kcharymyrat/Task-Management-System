@@ -20,6 +20,7 @@ public class SecurityConfigs {
                 .httpBasic(Customizer.withDefaults()) // enable basic HTTP authentication
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/tasks").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/tasks").authenticated()
                         .requestMatchers("/error").permitAll() // expose the /error endpoint
                         .requestMatchers("/actuator/shutdown").permitAll() // required for tests

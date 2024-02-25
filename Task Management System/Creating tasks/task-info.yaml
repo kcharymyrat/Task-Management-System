@@ -344,6 +344,314 @@ files:
           }
       }
     learner_created: false
+  - name: src/taskmanagement/accounts/AppUserDetailsImpl.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import org.springframework.security.core.GrantedAuthority;
+      import org.springframework.security.core.authority.SimpleGrantedAuthority;
+      import org.springframework.security.core.userdetails.UserDetails;
+      
+      import java.util.Collection;
+      import java.util.List;
+      
+      public class AppUserDetailsImpl implements UserDetails {
+      
+          private final AppUser user;
+      
+          public AppUserDetailsImpl(AppUser user) {
+              this.user = user;
+          }
+      
+          @Override
+          public Collection<? extends GrantedAuthority> getAuthorities() {
+              return List.of(new SimpleGrantedAuthority(user.getAuthority()));
+          }
+      
+          @Override
+          public String getPassword() {
+              return user.getPassword();
+          }
+      
+          @Override
+          public String getUsername() {
+              return user.getUsername();
+          }
+      
+          @Override
+          public boolean isAccountNonExpired() {
+              return true;
+          }
+      
+          @Override
+          public boolean isAccountNonLocked() {
+              return true;
+          }
+      
+          @Override
+          public boolean isCredentialsNonExpired() {
+              return true;
+          }
+      
+          @Override
+          public boolean isEnabled() {
+              return true;
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TasksController.java
+    visible: true
+    text: |
+      package taskmanagement.controllers;
+      
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.http.HttpStatus;
+      import org.springframework.http.ResponseEntity;
+      import org.springframework.security.core.annotation.AuthenticationPrincipal;
+      import org.springframework.security.core.userdetails.UserDetails;
+      import org.springframework.security.crypto.password.PasswordEncoder;
+      import org.springframework.web.bind.annotation.GetMapping;
+      import org.springframework.web.bind.annotation.PostMapping;
+      import org.springframework.web.bind.annotation.RequestBody;
+      import org.springframework.web.bind.annotation.RestController;
+      import taskmanagement.accounts.AppUser;
+      import taskmanagement.accounts.AppUserDetailsServiceImpl;
+      import taskmanagement.accounts.AppUserRepository;
+      import taskmanagement.dtos.RegistrationRequest;
+      
+      import java.util.regex.Matcher;
+      import java.util.regex.Pattern;
+      
+      @RestController
+      public class AppController {
+      
+          private final AppUserDetailsServiceImpl userService;
+      
+          @Autowired
+          public AppController(AppUserDetailsServiceImpl userService) {
+              this.userService = userService;
+          }
+      
+          @PostMapping("api/accounts")
+          public ResponseEntity<Void> register(@RequestBody RegistrationRequest request) {
+              // check for the request
+              if (request == null || request.email() == null || request.email().isBlank() || request.password() == null || request.password().isBlank()) {
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              String email = request.email().trim().toLowerCase();
+              String password = request.password().trim();
+      
+              // check if the email is valid
+              if (!isValidEmail(email)) {
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              // password shall be at least 8 char long
+              if (password.length() < 6){
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              // Check whether a user with username exists
+              if (userService.findByUsernameIgnoreCase(email).isPresent()) {
+                  return ResponseEntity.status(HttpStatus.CONFLICT).build();
+              }
+      
+              // create new user
+              userService.registerUser(email, password);
+      
+              return ResponseEntity.status(HttpStatus.OK).build();
+          }
+      
+          @GetMapping("/api/tasks")
+          public ResponseEntity<?> getTasks(@AuthenticationPrincipal UserDetails details) {
+      
+              System.out.println("Username: " + details.getUsername());
+              System.out.println("User has authorities/roles: " + details.getAuthorities());
+      
+              return ResponseEntity.status(HttpStatus.OK).build();
+          }
+      
+      
+          private boolean isValidEmail(String email) {
+              final String EMAIL_REGEX =
+                      "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+              final Pattern pattern = Pattern.compile(EMAIL_REGEX);
+              Matcher matcher = pattern.matcher(email);
+              return matcher.matches();
+          }
+      
+      }
+    learner_created: true
+  - name: src/taskmanagement/configs/SecurityConfigs.java
+    visible: true
+    text: |
+      package taskmanagement.configs;
+      
+      import org.springframework.context.annotation.Bean;
+      import org.springframework.context.annotation.Configuration;
+      import org.springframework.http.HttpMethod;
+      import org.springframework.security.config.Customizer;
+      import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+      import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+      import org.springframework.security.config.http.SessionCreationPolicy;
+      import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+      import org.springframework.security.crypto.password.PasswordEncoder;
+      import org.springframework.security.web.SecurityFilterChain;
+      
+      @Configuration
+      public class SecurityConfigs {
+      
+          @Bean
+          public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+              return http
+                      .httpBasic(Customizer.withDefaults()) // enable basic HTTP authentication
+                      .authorizeHttpRequests(auth -> auth
+                              .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
+                              .requestMatchers(HttpMethod.GET, "/api/tasks").authenticated()
+                              .requestMatchers("/error").permitAll() // expose the /error endpoint
+                              .requestMatchers("/actuator/shutdown").permitAll() // required for tests
+                              .requestMatchers("/h2-console/**").permitAll() // expose H2 console
+                      )
+                      .csrf(AbstractHttpConfigurer::disable) // allow modifying requests from tests
+                      .sessionManagement(sessions ->
+                              sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no session
+                      )
+                      .build();
+          }
+      
+      
+          @Bean
+          public PasswordEncoder passwordEncoder() {
+              return new BCryptPasswordEncoder();
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/RegistrationRequest.java
+    visible: true
+    text: |
+      package taskmanagement.dtos;
+      
+      public record RegistrationRequest(String email, String password) {
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserRepository.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import org.springframework.data.jpa.repository.JpaRepository;
+      import org.springframework.data.repository.CrudRepository;
+      
+      import java.util.Optional;
+      
+      public interface AppUserRepository extends CrudRepository<AppUser, Long> {
+          Optional<AppUser> findByUsernameIgnoreCase(String username);
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUser.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import jakarta.persistence.Entity;
+      import jakarta.persistence.GeneratedValue;
+      import jakarta.persistence.GenerationType;
+      import jakarta.persistence.Id;
+      
+      @Entity
+      public class AppUser {
+      
+          @Id
+          @GeneratedValue(strategy = GenerationType.IDENTITY)
+          private Long id;
+          private String username;
+          private String password;
+          private String authority;
+      
+          public AppUser() {
+          }
+      
+          public Long getId() {
+              return id;
+          }
+      
+      
+          public String getUsername() {
+              return username;
+          }
+      
+          public void setUsername(String email) {
+              this.username = email;
+          }
+      
+          public String getPassword() {
+              return password;
+          }
+      
+          public void setPassword(String password) {
+              this.password = password;
+          }
+      
+          public String getAuthority() {
+              return authority;
+          }
+      
+          public void setAuthority(String authority) {
+              this.authority = authority;
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserDetailsServiceImpl.java
+    visible: true
+    text: "package taskmanagement.accounts;\n\nimport org.springframework.beans.factory.annotation.Autowired;\n\
+    import org.springframework.security.core.userdetails.UserDetails;\nimport org.springframework.security.core.userdetails.UserDetailsService;\n\
+    import org.springframework.security.core.userdetails.UsernameNotFoundException;\n\
+    import org.springframework.security.crypto.password.PasswordEncoder;\nimport org.springframework.stereotype.Service;\n\
+    import taskmanagement.dtos.RegistrationRequest;\n\nimport java.util.Optional;\n\
+    \n@Service\npublic class AppUserDetailsServiceImpl implements UserDetailsService\
+    \ {\n    private final AppUserRepository repository;\n    private final PasswordEncoder\
+    \ passwordEncoder;\n\n    @Autowired\n    public AppUserDetailsServiceImpl(AppUserRepository\
+    \ repository, PasswordEncoder passwordEncoder) {\n        this.repository = repository;\n\
+    \        this.passwordEncoder = passwordEncoder;\n    }\n\n    @Override\n   \
+    \ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException\
+    \ {\n        AppUser user = repository\n                .findByUsernameIgnoreCase(username)\n\
+    \                .orElseThrow(() -> new UsernameNotFoundException(\"Not Found\"\
+    ));\n\n        return new AppUserDetailsImpl(user);\n    }\n    \n    public Optional<AppUser>\
+    \ findByUsernameIgnoreCase(String username) {\n        return repository.findByUsernameIgnoreCase(username);\n\
+    \    }\n\n    public void registerUser(String email, String password) {\n    \
+    \    AppUser user = new AppUser();\n        user.setUsername(email.trim().toLowerCase());\n\
+    \        user.setPassword(passwordEncoder.encode(password.trim().toLowerCase()));\n\
+    \        user.setAuthority(\"ROLE_USER\");\n        repository.save(user);\n \
+    \   }\n}\n"
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskEntity.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskStatus.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskRepository.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/AccountsController.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskDTO.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskService.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskResponseDTO.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/423/stages/2460/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 25 Feb 2024 19:04:33 UTC"
 record: -1
