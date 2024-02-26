@@ -9,33 +9,33 @@
 5[0m[0;34m =========|_|==============|___/=/_/_/_/
 7[0m[0;34m :: Spring Boot ::                (v3.0.2)
 [0m[0;34m
-É[0m[0;34m2024-02-26T20:29:44.411+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : Starting Application using Java 17.0.5 with PID 9888 (started by User in D:\JetBrainsWork\Task Management System\Task Management System\task)
-π[0m[0;34m2024-02-26T20:29:44.420+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : No active profile set, falling back to 1 default profile: "default"
-±[0m[0;34m2024-02-26T20:29:47.216+05:00  INFO 9888 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-Ã[0m[0;34m2024-02-26T20:29:47.348+05:00  INFO 9888 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 115 ms. Found 2 JPA repository interfaces.
-¢[0m[0;34m2024-02-26T20:29:48.538+05:00  INFO 9888 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-è[0m[0;34m2024-02-26T20:29:48.557+05:00  INFO 9888 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-•[0m[0;34m2024-02-26T20:29:48.558+05:00  INFO 9888 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
-®[0m[0;34m2024-02-26T20:29:48.767+05:00  INFO 9888 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-µ[0m[0;34m2024-02-26T20:29:48.772+05:00  INFO 9888 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4263 ms
-ê[0m[0;34m2024-02-26T20:29:48.979+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-ø[0m[0;34m2024-02-26T20:29:49.406+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:../tms_db user=SA
-ï[0m[0;34m2024-02-26T20:29:49.409+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-À[0m[0;34m2024-02-26T20:29:49.435+05:00  INFO 9888 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:../tms_db'
-Ø[0m[0;34m2024-02-26T20:29:49.768+05:00  INFO 9888 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-ß[0m[0;34m2024-02-26T20:29:49.870+05:00  INFO 9888 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
-˙[0m[0;34m2024-02-26T20:29:50.224+05:00  WARN 9888 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-Ø[0m[0;34m2024-02-26T20:29:50.508+05:00  INFO 9888 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-È[0m[0;34m2024-02-26T20:29:52.645+05:00  INFO 9888 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-π[0m[0;34m2024-02-26T20:29:52.663+05:00  INFO 9888 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-≠[0m[0;34m2024-02-26T20:29:53.966+05:00  WARN 9888 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-´[0m[0;34m2024-02-26T20:29:54.668+05:00  INFO 9888 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-ÿ	[0m[0;34m2024-02-26T20:29:54.835+05:00  INFO 9888 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@23973547, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3ed4c822, org.springframework.security.web.context.SecurityContextHolderFilter@301b89e1, org.springframework.security.web.header.HeaderWriterFilter@43945480, org.springframework.security.web.authentication.logout.LogoutFilter@5a02fca5, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@650e6569, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6b6d8671, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@64f1e9f8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@60773809, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b6558aa, org.springframework.security.web.session.SessionManagementFilter@3956df0a, org.springframework.security.web.access.ExceptionTranslationFilter@555b3ec9, org.springframework.security.web.access.intercept.AuthorizationFilter@2aadeb31]
-±[0m[0;34m2024-02-26T20:29:55.580+05:00  INFO 9888 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-∑[0m[0;34m2024-02-26T20:29:55.640+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : Started Application in 12.518 seconds (process running for 13.96)
-´[0;34m2024-02-26T20:29:56.687+05:00  INFO 9888 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-û[0m[0;34m2024-02-26T20:29:56.689+05:00  INFO 9888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-ñ[0m[0;34m2024-02-26T20:29:56.694+05:00  INFO 9888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+Ö[0m[0;34m2024-02-26T20:39:31.162+05:00  INFO 14292 --- [    Test worker] taskmanagement.Application               : Starting Application using Java 17.0.5 with PID 14292 (started by User in D:\JetBrainsWork\Task Management System\Task Management System\task)
+∫[0m[0;34m2024-02-26T20:39:31.167+05:00  INFO 14292 --- [    Test worker] taskmanagement.Application               : No active profile set, falling back to 1 default profile: "default"
+≤[0m[0;34m2024-02-26T20:39:33.078+05:00  INFO 14292 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+Ã[0m[0;34m2024-02-26T20:39:33.163+05:00  INFO 14292 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 2 JPA repository interfaces.
+£[0m[0;34m2024-02-26T20:39:34.167+05:00  INFO 14292 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+ê[0m[0;34m2024-02-26T20:39:34.185+05:00  INFO 14292 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+¶[0m[0;34m2024-02-26T20:39:34.186+05:00  INFO 14292 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
+©[0m[0;34m2024-02-26T20:39:34.315+05:00  INFO 14292 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+∂[0m[0;34m2024-02-26T20:39:34.319+05:00  INFO 14292 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3075 ms
+ë[0m[0;34m2024-02-26T20:39:34.497+05:00  INFO 14292 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+¿[0m[0;34m2024-02-26T20:39:34.864+05:00  INFO 14292 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:../tms_db user=SA
+ñ[0m[0;34m2024-02-26T20:39:34.867+05:00  INFO 14292 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+Ã[0m[0;34m2024-02-26T20:39:34.884+05:00  INFO 14292 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:../tms_db'
+∞[0m[0;34m2024-02-26T20:39:35.180+05:00  INFO 14292 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+®[0m[0;34m2024-02-26T20:39:35.269+05:00  INFO 14292 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
+˚[0m[0;34m2024-02-26T20:39:35.581+05:00  WARN 14292 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+∞[0m[0;34m2024-02-26T20:39:35.840+05:00  INFO 14292 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Í[0m[0;34m2024-02-26T20:39:37.473+05:00  INFO 14292 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+∫[0m[0;34m2024-02-26T20:39:37.487+05:00  INFO 14292 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+Æ[0m[0;34m2024-02-26T20:39:38.814+05:00  WARN 14292 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+¨[0m[0;34m2024-02-26T20:39:39.518+05:00  INFO 14292 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+ÿ	[0m[0;34m2024-02-26T20:39:39.677+05:00  INFO 14292 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c4a1980, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2125086c, org.springframework.security.web.context.SecurityContextHolderFilter@d96f413, org.springframework.security.web.header.HeaderWriterFilter@17e2ad13, org.springframework.security.web.authentication.logout.LogoutFilter@6ad036d6, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@484b187c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6b3a1151, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3423f353, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5c940e28, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@65c634f2, org.springframework.security.web.session.SessionManagementFilter@299e245c, org.springframework.security.web.access.ExceptionTranslationFilter@3bd1c7f0, org.springframework.security.web.access.intercept.AuthorizationFilter@311eb725]
+≤[0m[0;34m2024-02-26T20:39:40.127+05:00  INFO 14292 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+∑[0m[0;34m2024-02-26T20:39:40.148+05:00  INFO 14292 --- [    Test worker] taskmanagement.Application               : Started Application in 9.614 seconds (process running for 10.86)
+¨[0;34m2024-02-26T20:39:40.757+05:00  INFO 14292 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+ü[0m[0;34m2024-02-26T20:39:40.757+05:00  INFO 14292 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+ó[0m[0;34m2024-02-26T20:39:40.760+05:00  INFO 14292 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 [0m[0;34m
 <[0m[0;34mRequest: POST http://localhost:8080/api/accounts
 K[0m[0;34mRequest body: {"email":"alice@email.com","password":"password"}
@@ -144,28 +144,28 @@
 [0m[0;34m
 [0m[1;31m
 Start test 18[0m
-∑[0;34m2024-02-26T20:29:59.039+05:00  WARN 9888 --- [nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO) with 2 errors: [Field error in object 'taskDTO' on field 'title': rejected value [null]; codes [NotBlank.taskDTO.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be blank]] [Field error in object 'taskDTO' on field 'title': rejected value [null]; codes [NotNull.taskDTO.title,NotNull.title,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be null]] ]
+∏[0;34m2024-02-26T20:39:42.628+05:00  WARN 14292 --- [nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO) with 2 errors: [Field error in object 'taskDTO' on field 'title': rejected value [null]; codes [NotNull.taskDTO.title,NotNull.title,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be null]] [Field error in object 'taskDTO' on field 'title': rejected value [null]; codes [NotBlank.taskDTO.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be blank]] ]
 [0;34m
 9[0m[0;34mRequest: POST http://localhost:8080/api/tasks
 p[0m[0;34mRequest body: {"id":"3","description":"description 3","status":"CREATED","author":"bob@example.com"}
 [0m[0;34m
 [0m[1;31m
 Start test 19[0m
-÷[0;34m2024-02-26T20:29:59.061+05:00  WARN 9888 --- [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO): [Field error in object 'taskDTO' on field 'title': rejected value [ ]; codes [NotBlank.taskDTO.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be blank]] ]
+◊[0;34m2024-02-26T20:39:42.650+05:00  WARN 14292 --- [nio-8080-exec-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO): [Field error in object 'taskDTO' on field 'title': rejected value [ ]; codes [NotBlank.taskDTO.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.title,title]; arguments []; default message [title]]; default message [must not be blank]] ]
 [0;34m
 9[0m[0;34mRequest: POST http://localhost:8080/api/tasks
 |[0m[0;34mRequest body: {"id":"1","title":" ","description":"description 1","status":"CREATED","author":"alice@email.com"}
 [0m[0;34m
 [0m[1;31m
 Start test 20[0m
-ˇ[0;34m2024-02-26T20:29:59.096+05:00  WARN 9888 --- [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO) with 2 errors: [Field error in object 'taskDTO' on field 'description': rejected value [null]; codes [NotBlank.taskDTO.description,NotBlank.description,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be blank]] [Field error in object 'taskDTO' on field 'description': rejected value [null]; codes [NotNull.taskDTO.description,NotNull.description,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be null]] ]
+Ä	[0;34m2024-02-26T20:39:42.668+05:00  WARN 14292 --- [nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO) with 2 errors: [Field error in object 'taskDTO' on field 'description': rejected value [null]; codes [NotBlank.taskDTO.description,NotBlank.description,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be blank]] [Field error in object 'taskDTO' on field 'description': rejected value [null]; codes [NotNull.taskDTO.description,NotNull.description,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be null]] ]
 [0;34m
 9[0m[0;34mRequest: POST http://localhost:8080/api/tasks
 d[0m[0;34mRequest body: {"id":"1","title":"title 1","status":"CREATED","author":"alice@email.com"}
 [0m[0;34m
 [0m[1;31m
 Start test 21[0m
-˛[0m[0;34m2024-02-26T20:29:59.140+05:00  WARN 9888 --- [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO): [Field error in object 'taskDTO' on field 'description': rejected value [ ]; codes [NotBlank.taskDTO.description,NotBlank.description,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be blank]] ]
+ˇ[0m[0;34m2024-02-26T20:39:42.688+05:00  WARN 14292 --- [nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<taskmanagement.tasks.TaskResponseDTO> taskmanagement.tasks.TasksController.postTasks(taskmanagement.tasks.TaskDTO): [Field error in object 'taskDTO' on field 'description': rejected value [ ]; codes [NotBlank.taskDTO.description,NotBlank.description,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskDTO.description,description]; arguments []; default message [description]]; default message [must not be blank]] ]
 [0;34m
 9[0m[0;34mRequest: POST http://localhost:8080/api/tasks
 v[0m[0;34mRequest body: {"id":"1","title":"title 1","description":" ","status":"CREATED","author":"alice@email.com"}
@@ -181,12 +181,12 @@
 "[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 ?[0m[0;34massigneeDto = AssigneeDTO[assignee=bob@example.com]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@5329b1a7]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@5329b1a7
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@1f3a807a]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@1f3a807a
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
-P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@2c29bee7]
-F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@2c29bee7
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@5329b1a7
+P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@559d4ec1]
+F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@559d4ec1
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@1f3a807a
 ü[0m[0;34mtaskResponseDTO = TaskResponseDTO[id=1, title=title 1, description=description 1, status=CREATED, author=alice@email.com, assignee=bob@example.com]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/1/assign
@@ -197,12 +197,12 @@
 "[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 ?[0m[0;34massigneeDto = AssigneeDTO[assignee=bob@example.com]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@4a7283f6]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@4a7283f6
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@6f1ee595]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@6f1ee595
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
-P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@7a6807d6]
-F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@7a6807d6
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@4a7283f6
+P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@134018af]
+F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@134018af
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@6f1ee595
 ü[0m[0;34mtaskResponseDTO = TaskResponseDTO[id=2, title=title 2, description=description 2, status=CREATED, author=alice@email.com, assignee=bob@example.com]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/2/assign
@@ -210,13 +210,13 @@
 [0m[0;34m
 [0m[1;31m
 Start test 25[0m
-&[0m[0;34mUsername: alice@email.com
+"[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 4[0m[0;34massigneeDto = AssigneeDTO[assignee=none]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@2bad4b8f]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@2bad4b8f
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@273b6d93]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@273b6d93
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@2bad4b8f
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@273b6d93
 †[0m[0;34mnone case - taskResponseDTO = TaskResponseDTO[id=1, title=title 1, description=description 1, status=CREATED, author=alice@email.com, assignee=none]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/1/assign
@@ -227,12 +227,12 @@
 &[0m[0;34mUsername: bob@example.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 ?[0m[0;34massigneeDto = AssigneeDTO[assignee=alice@email.com]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@4f7f566c]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@4f7f566c
+R[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@10fc731]
+@[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@10fc731
 D[0m[0;34mauthor = bob@example.com, authUsername = bob@example.com
-P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@2aded75e]
-F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@2aded75e
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@4f7f566c
+P[0m[0;34moptionalAppUser = Optional[taskmanagement.accounts.AppUser@5e6beaa2]
+F[0m[0;34massigneeAppUser = taskmanagement.accounts.AppUser@5e6beaa2
+G[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@10fc731
 ü[0m[0;34mtaskResponseDTO = TaskResponseDTO[id=3, title=title 3, description=description 3, status=CREATED, author=bob@example.com, assignee=alice@email.com]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/3/assign
@@ -243,8 +243,8 @@
 &[0m[0;34mUsername: bob@example.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 ?[0m[0;34massigneeDto = AssigneeDTO[assignee=bob@example.com]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@3573e7ee]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@3573e7ee
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@7317e6a6]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@7317e6a6
 D[0m[0;34mauthor = alice@email.com, authUsername = bob@example.com
 2[0m[0;34mHttpStatus.BAD_REQUEST = 403 FORBIDDEN
 [0;34m
@@ -255,14 +255,14 @@
 Start test 28[0m
 &[0m[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-][0m[0;34massigneeDto = AssigneeDTO[assignee=fb8ff826-4011-4404-8f8a-5eb095f67087@test.com]
-R[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@db116f0]
-@[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@db116f0
+][0m[0;34massigneeDto = AssigneeDTO[assignee=3197d8c7-f6ca-48cf-b913-b47615d500c0@test.com]
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@71c4535d]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@71c4535d
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
 ,[0m[0;34moptionalAppUser = Optional.empty
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/1/assign
-V[0m[0;34mRequest body: {"assignee":"fb8ff826-4011-4404-8f8a-5eb095f67087@test.com"}
+V[0m[0;34mRequest body: {"assignee":"3197d8c7-f6ca-48cf-b913-b47615d500c0@test.com"}
 [0m[0;34m
 [0m[1;31m
 Start test 29[0m
@@ -282,14 +282,14 @@
 [0m[0;34m
 [0m[1;31m
 Start test 31[0m
-1[0;34mstatusDTO = StatusDTO[status=IN_PROGRESS]
+5[0m[0;34mstatusDTO = StatusDTO[status=IN_PROGRESS]
 &[0m[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 5[0m[0;34mstatusDTO = StatusDTO[status=IN_PROGRESS]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@5a744382]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@5a744382
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@17974803]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@17974803
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@5a744382
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@17974803
 §[0m[0;34mnone case - taskResponseDTO = TaskResponseDTO[id=1, title=title 1, description=description 1, status=IN_PROGRESS, author=alice@email.com, assignee=none]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/1/status
@@ -301,10 +301,10 @@
 &[0m[0;34mUsername: alice@email.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 5[0m[0;34mstatusDTO = StatusDTO[status=IN_PROGRESS]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@62f73a8d]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@62f73a8d
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@6749f884]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@6749f884
 D[0m[0;34mauthor = alice@email.com, authUsername = alice@email.com
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@62f73a8d
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@6749f884
 Ø[0m[0;34mnone case - taskResponseDTO = TaskResponseDTO[id=2, title=title 2, description=description 2, status=IN_PROGRESS, author=alice@email.com, assignee=bob@example.com]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/2/status
@@ -316,11 +316,11 @@
 &[0m[0;34mUsername: bob@example.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 3[0m[0;34mstatusDTO = StatusDTO[status=COMPLETED]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@5dbcec28]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@5dbcec28
+S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@3ff99f0a]
+A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@3ff99f0a
 D[0m[0;34mauthor = alice@email.com, authUsername = bob@example.com
-o[0m[0;34mtaskEntity.getAssignee() = taskmanagement.accounts.AppUser@503d4c22, authUsername = bob@example.com
-H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@5dbcec28
+o[0m[0;34mtaskEntity.getAssignee() = taskmanagement.accounts.AppUser@162fcd30, authUsername = bob@example.com
+H[0m[0;34mupdatedTaskEntity = taskmanagement.tasks.TaskEntity@3ff99f0a
 ≠[0m[0;34mnone case - taskResponseDTO = TaskResponseDTO[id=2, title=title 2, description=description 2, status=COMPLETED, author=alice@email.com, assignee=bob@example.com]
 [0;34m
 A[0m[0;34mRequest: PUT http://localhost:8080/api/tasks/2/status
@@ -332,8 +332,8 @@
 &[0m[0;34mUsername: bob@example.com
 :[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
 3[0m[0;34mstatusDTO = StatusDTO[status=COMPLETED]
-S[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@5c0a1189]
-A[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@5c0a1189
+R[0m[0;34moptionalTaskEntity = Optional[taskmanagement.tasks.TaskEntity@2d9e721]
+@[0m[0;34mtaskEntity = taskmanagement.tasks.TaskEntity@2d9e721
 D[0m[0;34mauthor = alice@email.com, authUsername = bob@example.com
 2[0m[0;34mHttpStatus.BAD_REQUEST = 403 FORBIDDEN
 [0;34m
@@ -359,152 +359,8 @@
 [0m[0;34m
 [0m[1;31m
 Start test 37[0m
-"[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-*[0m[0;34mauthor = null, assignee = null
 [0;34m
-8[0m[0;34mRequest: GET http://localhost:8080/api/tasks
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 38[0m
-&[0m[0;34mUsername: bob@example.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-*[0m[0;34mauthor = null, assignee = null
-[0;34m
-8[0m[0;34mRequest: GET http://localhost:8080/api/tasks
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 39[0m
-[0;34m
-8[0m[0;34mRequest: GET http://localhost:8080/api/tasks
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 40[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-5[0m[0;34mauthor = alice@email.com, assignee = null
-[0;34m
-O[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=alice@email.com
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 41[0m
-&[0m[0;34mUsername: bob@example.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-5[0m[0;34mauthor = alice@email.com, assignee = null
-[0;34m
-O[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=alice@email.com
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 42[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-5[0m[0;34mauthor = bob@example.com, assignee = null
-[0;34m
-O[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=bob@example.com
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 43[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
--[0m[0;34mauthor = unknown, assignee = null
-[0;34m
-G[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=unknown
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 44[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
--[0m[0;34mauthor = null, assignee = unknown
-[0;34m
-I[0m[0;34mRequest: GET http://localhost:8080/api/tasks?assignee=unknown
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 45[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-@[0m[0;34mauthor = alice@email.com, assignee = bob@example.com
-[0;34m
-h[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=alice@email.com&assignee=bob@example.com
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 46[0m
-&[0m[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-@[0m[0;34mauthor = bob@example.com, assignee = alice@email.com
-[0;34m
-h[0m[0;34mRequest: GET http://localhost:8080/api/tasks?author=bob@example.com&assignee=alice@email.com
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 47[0m
-ã[0;34m2024-02-26T20:30:00.644+05:00  INFO 9888 --- [       Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-¨[0m[0;34m2024-02-26T20:30:00.646+05:00  INFO 9888 --- [       Thread-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
-µ[0m[0;34m2024-02-26T20:30:00.661+05:00  INFO 9888 --- [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-ö[0m[0;34m2024-02-26T20:30:00.665+05:00  INFO 9888 --- [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-ò[0m[0;34m2024-02-26T20:30:00.739+05:00  INFO 9888 --- [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-	[0;34m
-4[0m[0;34m  .   ____          _            __ _ _
-5[0m[0;34m /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-6[0m[0;34m( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-7[0m[0;34m \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-6[0m[0;34m  '  |____| .__|_| |_|_| |_\__, | / / / /
-5[0m[0;34m =========|_|==============|___/=/_/_/_/
-7[0m[0;34m :: Spring Boot ::                (v3.0.2)
-[0m[0;34m
-É[0m[0;34m2024-02-26T20:30:11.277+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : Starting Application using Java 17.0.5 with PID 9888 (started by User in D:\JetBrainsWork\Task Management System\Task Management System\task)
-π[0m[0;34m2024-02-26T20:30:11.279+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : No active profile set, falling back to 1 default profile: "default"
-±[0m[0;34m2024-02-26T20:30:12.192+05:00  INFO 9888 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-À[0m[0;34m2024-02-26T20:30:12.212+05:00  INFO 9888 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 2 JPA repository interfaces.
-¢[0m[0;34m2024-02-26T20:30:12.414+05:00  INFO 9888 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-è[0m[0;34m2024-02-26T20:30:12.415+05:00  INFO 9888 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-•[0m[0;34m2024-02-26T20:30:12.415+05:00  INFO 9888 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.5]
-®[0m[0;34m2024-02-26T20:30:12.467+05:00  INFO 9888 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-µ[0m[0;34m2024-02-26T20:30:12.468+05:00  INFO 9888 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1182 ms
-ê[0m[0;34m2024-02-26T20:30:12.525+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-¿[0m[0;34m2024-02-26T20:30:12.548+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:file:../tms_db user=SA
-ï[0m[0;34m2024-02-26T20:30:12.548+05:00  INFO 9888 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-À[0m[0;34m2024-02-26T20:30:12.549+05:00  INFO 9888 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:../tms_db'
-Ø[0m[0;34m2024-02-26T20:30:12.821+05:00  INFO 9888 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-˙[0m[0;34m2024-02-26T20:30:12.830+05:00  WARN 9888 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-Ø[0m[0;34m2024-02-26T20:30:12.842+05:00  INFO 9888 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-È[0m[0;34m2024-02-26T20:30:13.176+05:00  INFO 9888 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-π[0m[0;34m2024-02-26T20:30:13.176+05:00  INFO 9888 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-≠[0m[0;34m2024-02-26T20:30:13.403+05:00  WARN 9888 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-´[0m[0;34m2024-02-26T20:30:13.595+05:00  INFO 9888 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-’	[0m[0;34m2024-02-26T20:30:13.618+05:00  INFO 9888 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@32e9c8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@47d8c666, org.springframework.security.web.context.SecurityContextHolderFilter@53e7cc08, org.springframework.security.web.header.HeaderWriterFilter@73193fe0, org.springframework.security.web.authentication.logout.LogoutFilter@5dbd7f00, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@138c2ba, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3e9053b3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b45016d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7119d1da, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4dba2d07, org.springframework.security.web.session.SessionManagementFilter@295d1a45, org.springframework.security.web.access.ExceptionTranslationFilter@12515d64, org.springframework.security.web.access.intercept.AuthorizationFilter@3c832820]
-±[0m[0;34m2024-02-26T20:30:13.768+05:00  INFO 9888 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-∑[0m[0;34m2024-02-26T20:30:13.782+05:00  INFO 9888 --- [    Test worker] taskmanagement.Application               : Started Application in 2.547 seconds (process running for 32.101)
-[0m[1;31m
-Start test 48[0m
-´[0;34m2024-02-26T20:30:13.805+05:00  INFO 9888 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-û[0m[0;34m2024-02-26T20:30:13.805+05:00  INFO 9888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-ñ[0m[0;34m2024-02-26T20:30:13.808+05:00  INFO 9888 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
-[0;34m
-<[0m[0;34mRequest: POST http://localhost:8080/api/accounts
-Í[0m[0;34mRequest body: {"email":"alice@email.com","password":"password","token":"eyJraWQiOiJjNzQzOTYyMy0wZGViLTRiNzItODkzNC05MmU5OWMyZTk2NDEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhbGljZUBlbWFpbC5jb20iLCJleHAiOjE3MDg5NjE0NTgsImlhdCI6MTcwODk2MTM5OCwic2NvcGUiOlsiUk9MRV9VU0VSIl19.EHgKxEPzvZrkT6rqR1tpwr7UDAHAfkLt7ecGz-mWHJYPpa2FFlOFj0NkGJB89my8nHu-QvdMnXlkiVzsKcMIora6t_t88dAPmmySlBXDhyhv4e0mEBwyXFLv0AHyGbTB925hOALzn3A5hfLpouqhaGRkDJW06ek3lLvw8m4xa2DlC_zJ7SND5bUSB7tnwst4tmU5UPpYcwt02gB58Br6SDXO3vJV8qCPPV0Qko2SDhVvN4hcLT3NzGbLanwX9rzlxf2Tm_TufvO3VSoanrv2vEcTjcBxjUqB5sWnmiQYyqfarI3MyqMZdtDpeFRkw_Z8fkdUU0cry8x6gmzS1zdeiA"}
-[0m[0;34m
-[0m[1;31m
-Start test 49[0m
-[0;34m
->[0m[0;34mRequest: POST http://localhost:8080/api/auth/token
-[0m[0;34mRequest body: 
-[0m[0;34m
-[0m[1;31m
-Start test 50[0m
-"[0;34mUsername: alice@email.com
-:[0m[0;34mUser has authorities/roles: [SCOPE_ROLE_USER]
-*[0m[0;34mauthor = null, assignee = null
-[0;34m
-8[0m[0;34mRequest: GET http://localhost:8080/api/tasks
-[0m[0;34mRequest body: 
+D[0m[0;34mRequest: POST http://localhost:8080/api/tasks/1/comments
+.[0m[0;34mRequest body: {"text":"comment 1"}
 [0m[0;34m
 [0m
