@@ -24,6 +24,10 @@ public class TaskEntity {
     @JoinColumn(name = "author_id", nullable = false)
     private AppUser author;
 
+    @ManyToOne
+    @JoinColumn(name = "assignee_id", nullable = true)
+    private AppUser assignee;
+
     public TaskEntity() {
     }
 
@@ -61,5 +65,13 @@ public class TaskEntity {
 
     public void setAuthor(AppUser author) {
         this.author = author;
+    }
+
+    public AppUser getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(AppUser assignee) {
+        this.assignee = assignee;
     }
 }

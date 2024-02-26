@@ -539,6 +539,712 @@ files:
           }
       }
     learner_created: false
+  - name: src/taskmanagement/tasks/TaskRepository.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import org.springframework.data.repository.CrudRepository;
+      
+      public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskService.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import jakarta.transaction.Transactional;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.security.core.userdetails.UserDetails;
+      import org.springframework.stereotype.Service;
+      import taskmanagement.accounts.AppUser;
+      import taskmanagement.accounts.AppUserRepository;
+      
+      import java.util.*;
+      import java.util.stream.Collectors;
+      
+      @Service
+      public class TaskService {
+      
+          private final AppUserRepository userRepository;
+          private final TaskRepository taskRepository;
+      
+          @Autowired
+          public TaskService(AppUserRepository userRepository, TaskRepository taskRepository) {
+              this.userRepository = userRepository;
+              this.taskRepository = taskRepository;
+          }
+      
+          @Transactional
+          public Optional<TaskEntity> createTask(String title, String description, String username) {
+              // Get AppUser from UserDetails
+              Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(username);
+              if (optionalAppUser.isEmpty()) {
+                  return Optional.empty();
+              }
+              AppUser user = optionalAppUser.get();
+      
+              TaskEntity newTask = new TaskEntity();
+              newTask.setTitle(title.trim());
+              newTask.setDescription(description.trim());
+      
+              // Set the author of the task
+              newTask.setAuthor(user);
+      
+              // Add the new task to the user's tasks
+              user.getTasks().add(newTask);
+      
+              taskRepository.save(newTask);
+              userRepository.save(user);
+      
+              return Optional.of(newTask);
+          }
+      
+          public List<TaskResponseDTO> getAllTasks() {
+              List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
+              List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
+                      .map(this::taskEntityToTaskResponseDTO)
+                      .collect(Collectors.toList());
+      
+              Collections.reverse(taskResponseDTOList);
+      
+              return taskResponseDTOList;
+          }
+      
+      
+          public List<TaskResponseDTO> getAllTasks(String author) {
+              Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(author.trim().toLowerCase());
+              if (optionalAppUser.isEmpty()) {
+                  return new ArrayList<TaskResponseDTO>();
+              }
+              AppUser user = optionalAppUser.get();
+      
+              List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
+      
+              List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
+                      .filter(task -> task.getAuthor().equals(user))
+                      .map(this::taskEntityToTaskResponseDTO)
+                      .collect(Collectors.toList());;
+      
+              Collections.reverse(taskResponseDTOList);
+      
+              return taskResponseDTOList;
+          }
+      
+          public TaskResponseDTO taskEntityToTaskResponseDTO(TaskEntity taskEntity) {
+              return new TaskResponseDTO(
+                      taskEntity.getId().toString(),
+                      taskEntity.getTitle(),
+                      taskEntity.getDescription(),
+                      taskEntity.getStatus().toString(),
+                      taskEntity.getAuthor().getUsername()
+              );
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskDTO.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import jakarta.validation.constraints.NotBlank;
+      import jakarta.validation.constraints.NotNull;
+      
+      public record TaskDTO(
+              @NotBlank
+              @NotNull
+              String title,
+      
+              @NotNull
+              @NotBlank
+              String description
+      ) { }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskResponseDTO.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import jakarta.validation.constraints.NotBlank;
+      import jakarta.validation.constraints.NotNull;
+      
+      public record TaskResponseDTO(
+              @NotBlank
+              @NotNull
+              String id,
+      
+              @NotBlank
+              @NotNull
+              String title,
+      
+              @NotBlank
+              @NotNull
+              String description,
+      
+              @NotBlank
+              @NotNull
+              String status,
+      
+              @NotBlank
+              @NotNull
+              String author
+      ) { }
+    learner_created: true
+  - name: src/taskmanagement/configs/RsaKeysConfig.java
+    visible: true
+    text: |-
+      package taskmanagement.configs;
+      
+      import org.springframework.context.annotation.Bean;
+      import org.springframework.context.annotation.Configuration;
+      
+      import java.security.KeyPair;
+      import java.security.KeyPairGenerator;
+      import java.security.NoSuchAlgorithmException;
+      
+      @Configuration
+      public class RsaKeysConfig {
+      
+          @Bean
+          public KeyPair generateRsaKeys() {
+              try {
+                  KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+                  keyPairGenerator.initialize(2048);
+                  return keyPairGenerator.generateKeyPair();
+              } catch (NoSuchAlgorithmException e) {
+                  throw new IllegalStateException(e);
+              }
+      
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AccountsController.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.http.HttpStatus;
+      import org.springframework.http.ResponseEntity;
+      import org.springframework.security.core.Authentication;
+      import org.springframework.security.core.GrantedAuthority;
+      import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+      import org.springframework.security.oauth2.jwt.JwtEncoder;
+      import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+      import org.springframework.web.bind.annotation.PostMapping;
+      import org.springframework.web.bind.annotation.RequestBody;
+      import org.springframework.web.bind.annotation.RestController;
+      
+      import java.time.Instant;
+      import java.time.temporal.ChronoUnit;
+      import java.util.List;
+      import java.util.regex.Matcher;
+      import java.util.regex.Pattern;
+      
+      @RestController
+      public class AccountsController {
+      
+          private final AppUserDetailsServiceImpl userService;
+          private final JwtEncoder jwtEncoder;
+      
+          @Autowired
+          public AccountsController(AppUserDetailsServiceImpl userService, JwtEncoder jwtEncoder) {
+              this.userService = userService;
+              this.jwtEncoder = jwtEncoder;
+          }
+      
+          @PostMapping("/api/auth/token")
+          public ResponseEntity<TokenResponseDTO> token(Authentication authentication) {
+              List<String> authorities = authentication.getAuthorities().stream()
+                      .map(GrantedAuthority::getAuthority)
+                      .toList();
+      
+              JwtClaimsSet claimsSet = JwtClaimsSet.builder()
+                      .subject(authentication.getName())
+                      .issuedAt(Instant.now())
+                      .expiresAt(Instant.now().plus(60, ChronoUnit.SECONDS))
+                      .claim("scope", authorities)
+                      .build();
+      
+              String token = jwtEncoder.encode(JwtEncoderParameters.from(claimsSet))
+                      .getTokenValue();
+      
+              return ResponseEntity.status(HttpStatus.OK).body(new TokenResponseDTO(token));
+          }
+      
+          @PostMapping("api/accounts")
+          public ResponseEntity<Void> register(@RequestBody RegistrationRequest request) {
+              // check for the request
+              if (request == null || request.email() == null || request.email().isBlank() || request.password() == null || request.password().isBlank()) {
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              String email = request.email().trim().toLowerCase();
+              String password = request.password().trim();
+      
+              // check if the email is valid
+              if (!isValidEmail(email)) {
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              // password shall be at least 8 char long
+              if (password.length() < 6){
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              // Check whether a user with username exists
+              if (userService.findByUsernameIgnoreCase(email).isPresent()) {
+                  return ResponseEntity.status(HttpStatus.CONFLICT).build();
+              }
+      
+              // create new user
+              userService.registerUser(email, password);
+      
+              return ResponseEntity.status(HttpStatus.OK).build();
+          }
+      
+          private boolean isValidEmail(String email) {
+              final String EMAIL_REGEX =
+                      "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+              final Pattern pattern = Pattern.compile(EMAIL_REGEX);
+              Matcher matcher = pattern.matcher(email);
+              return matcher.matches();
+          }
+      
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskEntity.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import jakarta.persistence.*;
+      import jakarta.validation.constraints.NotBlank;
+      import jakarta.validation.constraints.NotNull;
+      import taskmanagement.accounts.AppUser;
+      
+      @Entity
+      @Table(name = "tasks")
+      public class TaskEntity {
+          @Id
+          @GeneratedValue(strategy = GenerationType.IDENTITY)
+          private Long id;
+      
+          @NotBlank
+          @NotNull
+          private String title;
+          private String description;
+      
+          @Enumerated(EnumType.STRING)
+          private TaskStatus status = TaskStatus.CREATED;
+      
+          @ManyToOne
+          @JoinColumn(name = "author_id", nullable = false)
+          private AppUser author;
+      
+          public TaskEntity() {
+          }
+      
+          public Long getId() {
+              return id;
+          }
+      
+          public String getTitle() {
+              return title;
+          }
+      
+          public void setTitle(String title) {
+              this.title = title;
+          }
+      
+          public String getDescription() {
+              return description;
+          }
+      
+          public void setDescription(String description) {
+              this.description = description;
+          }
+      
+          public TaskStatus getStatus() {
+              return status;
+          }
+      
+          public void setStatus(TaskStatus status) {
+              this.status = status;
+          }
+      
+          public AppUser getAuthor() {
+              return author;
+          }
+      
+          public void setAuthor(AppUser author) {
+              this.author = author;
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/RegistrationRequest.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      public record RegistrationRequest(String email, String password) {
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserDetailsImpl.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import org.springframework.security.core.GrantedAuthority;
+      import org.springframework.security.core.authority.SimpleGrantedAuthority;
+      import org.springframework.security.core.userdetails.UserDetails;
+      
+      import java.util.Collection;
+      import java.util.List;
+      
+      public class AppUserDetailsImpl implements UserDetails {
+      
+          private final AppUser user;
+      
+          public AppUserDetailsImpl(AppUser user) {
+              this.user = user;
+          }
+      
+          @Override
+          public Collection<? extends GrantedAuthority> getAuthorities() {
+              return List.of(new SimpleGrantedAuthority(user.getAuthority()));
+          }
+      
+          @Override
+          public String getPassword() {
+              return user.getPassword();
+          }
+      
+          @Override
+          public String getUsername() {
+              return user.getUsername();
+          }
+      
+          @Override
+          public boolean isAccountNonExpired() {
+              return true;
+          }
+      
+          @Override
+          public boolean isAccountNonLocked() {
+              return true;
+          }
+      
+          @Override
+          public boolean isCredentialsNonExpired() {
+              return true;
+          }
+      
+          @Override
+          public boolean isEnabled() {
+              return true;
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/configs/SecurityConfigs.java
+    visible: true
+    text: |
+      package taskmanagement.configs;
+      
+      import com.nimbusds.jose.jwk.JWKSet;
+      import com.nimbusds.jose.jwk.RSAKey;
+      import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+      import com.nimbusds.jose.jwk.source.JWKSource;
+      import com.nimbusds.jose.proc.SecurityContext;
+      import org.springframework.context.annotation.Bean;
+      import org.springframework.context.annotation.Configuration;
+      import org.springframework.http.HttpMethod;
+      import org.springframework.security.config.Customizer;
+      import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+      import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+      import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+      import org.springframework.security.config.http.SessionCreationPolicy;
+      import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+      import org.springframework.security.crypto.password.PasswordEncoder;
+      import org.springframework.security.oauth2.jwt.JwtDecoder;
+      import org.springframework.security.oauth2.jwt.JwtEncoder;
+      import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+      import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+      import org.springframework.security.web.SecurityFilterChain;
+      
+      import java.security.KeyPair;
+      import java.security.interfaces.RSAPublicKey;
+      import java.util.UUID;
+      
+      @Configuration
+      public class SecurityConfigs {
+      
+      
+          @Bean
+          public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+              return http
+                      .httpBasic(Customizer.withDefaults()) // enable basic HTTP authentication
+                      .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt) //enabling jwt authentication
+                      .authorizeHttpRequests(auth -> auth
+                              // other matchers
+                              .requestMatchers("/error").permitAll() // expose the /error endpoint
+                              .requestMatchers("/actuator/shutdown").permitAll() // required for tests
+                              .requestMatchers("/api/accounts").permitAll()
+                              .requestMatchers("/api/tasks", "/api/auth/token").authenticated()
+      
+                      )
+                      .csrf(AbstractHttpConfigurer::disable) // allow modifying requests from tests
+                      .sessionManagement(sessions ->
+                              sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no session
+                      )
+                      .build();
+          }
+      
+          @Bean
+          public PasswordEncoder passwordEncoder() {
+              return new BCryptPasswordEncoder();
+          }
+      
+      
+          @Bean
+          JwtDecoder jwtDecoder(KeyPair keyPair) {
+              return NimbusJwtDecoder
+                      .withPublicKey((RSAPublicKey) keyPair.getPublic())
+                      .build();
+          }
+      
+          @Bean
+          JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
+              RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
+                      .privateKey(keyPair.getPrivate())
+                      .keyID(UUID.randomUUID().toString())
+                      .build();
+              JWKSet jwkSet = new JWKSet(rsaKey);
+              return new ImmutableJWKSet<>(jwkSet);
+          }
+      
+          @Bean
+          public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+              return new NimbusJwtEncoder(jwkSource);
+          }
+      
+      
+      
+      
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/TasksController.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      import jakarta.validation.Valid;
+      import org.springframework.http.HttpStatus;
+      import org.springframework.http.ResponseEntity;
+      import org.springframework.security.core.Authentication;
+      import org.springframework.security.core.annotation.AuthenticationPrincipal;
+      import org.springframework.security.core.context.SecurityContextHolder;
+      import org.springframework.security.core.parameters.P;
+      import org.springframework.security.core.userdetails.UserDetails;
+      import org.springframework.security.core.userdetails.UserDetailsService;
+      import org.springframework.web.bind.annotation.*;
+      import taskmanagement.accounts.AppUserDetailsImpl;
+      
+      import java.util.List;
+      import java.util.Optional;
+      
+      @RestController
+      public class TasksController {
+      
+          final private TaskService taskService;
+      
+          public TasksController(TaskService taskService) {
+              this.taskService = taskService;
+          }
+      
+          @PostMapping("/api/tasks")
+          public ResponseEntity<TaskResponseDTO> postTasks(
+                  @RequestBody @Valid TaskDTO taskDTO
+          ) {
+              Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+              System.out.println("Username: " + auth.getName());
+              System.out.println("User has authorities/roles: " + auth.getAuthorities());
+      
+              Optional<TaskEntity> optionalTaskEntity = taskService.createTask(taskDTO.title(), taskDTO.description(), auth.getName());
+      
+              if (optionalTaskEntity.isEmpty()) {
+                  return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              }
+      
+              TaskEntity taskEntity = optionalTaskEntity.get();
+              TaskResponseDTO taskResponseDTO = taskService.taskEntityToTaskResponseDTO(taskEntity);
+      
+              return ResponseEntity.status(HttpStatus.OK).body(taskResponseDTO);
+          }
+      
+      
+          @GetMapping("/api/tasks")
+          public ResponseEntity<List<TaskResponseDTO>> getTasks(
+                  @RequestParam(required = false) String author
+          ) {
+              Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+              System.out.println("Username: " + auth.getName());
+              System.out.println("User has authorities/roles: " + auth.getAuthorities());
+      
+              if (author == null || author.isBlank() || author.isEmpty()) {
+                  return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
+              }
+              return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks(author));
+          }
+      
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserRepository.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import org.springframework.data.jpa.repository.JpaRepository;
+      import org.springframework.data.repository.CrudRepository;
+      
+      import java.util.Optional;
+      
+      public interface AppUserRepository extends CrudRepository<AppUser, Long> {
+          Optional<AppUser> findByUsernameIgnoreCase(String username);
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/TokenResponseDTO.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import jakarta.validation.constraints.NotBlank;
+      import jakarta.validation.constraints.NotNull;
+      
+      public record TokenResponseDTO(
+              @NotNull
+              @NotBlank
+              String token
+      ) { }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUser.java
+    visible: true
+    text: |
+      package taskmanagement.accounts;
+      
+      import jakarta.persistence.*;
+      import jakarta.validation.constraints.NotBlank;
+      import jakarta.validation.constraints.NotNull;
+      import taskmanagement.tasks.TaskEntity;
+      
+      import java.util.ArrayList;
+      import java.util.HashSet;
+      import java.util.List;
+      import java.util.Set;
+      
+      @Entity
+      @Table(name = "app_users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+      public class AppUser {
+      
+          @Id
+          @GeneratedValue(strategy = GenerationType.IDENTITY)
+          private Long id;
+      
+          @NotNull
+          @NotBlank
+          private String username;
+      
+          @NotNull
+          @NotBlank
+          private String password;
+          private String authority = "ROLE_USER";
+      
+          @OneToMany(mappedBy = "author")
+          private Set<TaskEntity> tasks = new HashSet<>();
+      
+          public AppUser() {
+          }
+      
+          public Long getId() {
+              return id;
+          }
+      
+      
+          public String getUsername() {
+              return username;
+          }
+      
+          public void setUsername(String email) {
+              this.username = email;
+          }
+      
+          public String getPassword() {
+              return password;
+          }
+      
+          public void setPassword(String password) {
+              this.password = password;
+          }
+      
+          public String getAuthority() {
+              return authority;
+          }
+      
+          public void setAuthority(String authority) {
+              this.authority = authority;
+          }
+      
+          public Set<TaskEntity> getTasks() {
+              return tasks;
+          }
+      
+          public void addTask(TaskEntity task) {
+              this.tasks.add(task);
+          }
+      }
+    learner_created: true
+  - name: src/taskmanagement/accounts/AppUserDetailsServiceImpl.java
+    visible: true
+    text: "package taskmanagement.accounts;\n\nimport org.springframework.beans.factory.annotation.Autowired;\n\
+    import org.springframework.security.core.userdetails.UserDetails;\nimport org.springframework.security.core.userdetails.UserDetailsService;\n\
+    import org.springframework.security.core.userdetails.UsernameNotFoundException;\n\
+    import org.springframework.security.crypto.password.PasswordEncoder;\nimport org.springframework.stereotype.Service;\n\
+    \nimport java.util.Optional;\n\n@Service\npublic class AppUserDetailsServiceImpl\
+    \ implements UserDetailsService {\n    private final AppUserRepository repository;\n\
+    \    private final PasswordEncoder passwordEncoder;\n\n    @Autowired\n    public\
+    \ AppUserDetailsServiceImpl(AppUserRepository repository, PasswordEncoder passwordEncoder)\
+    \ {\n        this.repository = repository;\n        this.passwordEncoder = passwordEncoder;\n\
+    \    }\n\n    @Override\n    public UserDetails loadUserByUsername(String username)\
+    \ throws UsernameNotFoundException {\n        AppUser user = repository\n    \
+    \            .findByUsernameIgnoreCase(username)\n                .orElseThrow(()\
+    \ -> new UsernameNotFoundException(\"Not Found\"));\n\n        return new AppUserDetailsImpl(user);\n\
+    \    }\n    \n    public Optional<AppUser> findByUsernameIgnoreCase(String username)\
+    \ {\n        return repository.findByUsernameIgnoreCase(username);\n    }\n\n\
+    \    public void registerUser(String email, String password) {\n        AppUser\
+    \ user = new AppUser();\n        user.setUsername(email.trim().toLowerCase());\n\
+    \        user.setPassword(passwordEncoder.encode(password.trim().toLowerCase()));\n\
+    \        user.setAuthority(\"ROLE_USER\");\n        repository.save(user);\n \
+    \   }\n}\n"
+    learner_created: true
+  - name: src/taskmanagement/tasks/TaskStatus.java
+    visible: true
+    text: |
+      package taskmanagement.tasks;
+      
+      public enum TaskStatus {
+          CREATED,
+      }
+    learner_created: true
+  - name: src/taskmanagement/tasks/AssigneeDTO.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/tasks/StatusDTO.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/423/stages/2462/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 26 Feb 2024 15:30:14 UTC"
 record: -1

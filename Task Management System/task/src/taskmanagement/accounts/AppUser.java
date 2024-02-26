@@ -30,6 +30,10 @@ public class AppUser {
     @OneToMany(mappedBy = "author")
     private Set<TaskEntity> tasks = new HashSet<>();
 
+    @Column(name = "assigned_task")
+    @OneToMany(mappedBy = "assignee")
+    private Set<TaskEntity> assignedTasks = new HashSet<>();
+
     public AppUser() {
     }
 
@@ -68,5 +72,13 @@ public class AppUser {
 
     public void addTask(TaskEntity task) {
         this.tasks.add(task);
+    }
+
+    public Set<TaskEntity> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+    public void addAssignedTask(TaskEntity task) {
+        this.assignedTasks.add(task);
     }
 }

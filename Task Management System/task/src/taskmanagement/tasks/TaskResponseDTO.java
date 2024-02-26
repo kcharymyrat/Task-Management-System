@@ -3,6 +3,8 @@ package taskmanagement.tasks;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Optional;
+
 public record TaskResponseDTO(
         @NotBlank
         @NotNull
@@ -22,5 +24,7 @@ public record TaskResponseDTO(
 
         @NotBlank
         @NotNull
-        String author
+        String author,
+
+        String assignee
 ) { }

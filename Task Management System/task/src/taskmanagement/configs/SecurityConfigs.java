@@ -39,8 +39,8 @@ public class SecurityConfigs {
                         .requestMatchers("/error").permitAll() // expose the /error endpoint
                         .requestMatchers("/actuator/shutdown").permitAll() // required for tests
                         .requestMatchers("/api/accounts").permitAll()
-                        .requestMatchers("/api/tasks", "/api/auth/token").authenticated()
-
+                        .requestMatchers("/api/tasks", "/api/auth/token", "/api/tasks/{id}/assign").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/tasks/{id}/status").authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable) // allow modifying requests from tests
                 .sessionManagement(sessions ->
