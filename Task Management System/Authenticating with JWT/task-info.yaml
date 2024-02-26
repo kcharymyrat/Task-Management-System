@@ -993,12 +993,15 @@ files:
           CREATED,
       }
     learner_created: true
+  - name: src/taskmanagement/configs/RsaKeysConfig.java
+    visible: true
+    learner_created: true
+  - name: src/taskmanagement/accounts/TokenResponseDTO.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/423/stages/2461/implement#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #11
-
-    Expected status code 403 but received 200
-  time: "Mon, 26 Feb 2024 02:28:35 UTC"
+  message: Congratulations!
+  time: "Mon, 26 Feb 2024 06:08:02 UTC"
 record: -1

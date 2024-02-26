@@ -23,9 +23,9 @@ public class TaskService {
     }
 
     @Transactional
-    public Optional<TaskEntity> createTask(String title, String description, UserDetails userDetails) {
+    public Optional<TaskEntity> createTask(String title, String description, String username) {
         // Get AppUser from UserDetails
-        Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(userDetails.getUsername());
+        Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(username);
         if (optionalAppUser.isEmpty()) {
             return Optional.empty();
         }
