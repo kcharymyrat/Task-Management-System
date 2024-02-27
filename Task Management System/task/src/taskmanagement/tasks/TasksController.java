@@ -1,20 +1,15 @@
 package taskmanagement.tasks;
 
 import jakarta.validation.Valid;
-import org.aspectj.apache.bcel.classfile.SourceFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import taskmanagement.accounts.AppUser;
 import taskmanagement.accounts.AppUserDetailsServiceImpl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class TasksController {
@@ -49,7 +44,7 @@ public class TasksController {
 
 
     @GetMapping("/api/tasks")
-    public ResponseEntity<List<TaskResponseDTO>> getTasks(
+    public ResponseEntity<List<TaskResponseGetDTO>> getTasks(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String assignee
     ) {
@@ -201,5 +196,63 @@ public class TasksController {
         System.out.printf("none case - taskResponseDTO = %s\n", taskResponseDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(taskResponseDTO);
+    }
+
+    @PostMapping("api/tasks/{id}/comments")
+    public ResponseEntity<Void> postComment(
+            @PathVariable Long id,
+            @RequestBody CommentDTO commentDTO
+    ) {
+        if (commentDTO == null || commentDTO.text() == null || commentDTO.text().isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        // get a task
+        Optional<TaskEntity> optionalTaskEntity = taskService.getTaskEntityById(id);
+        if (optionalTaskEntity.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        TaskEntity taskEntity = optionalTaskEntity.get();
+
+        // Get user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<AppUser> optionalAppUser = appUserDetailsService.findByUsernameIgnoreCase(auth.getName());
+        if (optionalAppUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        AppUser appUser = optionalAppUser.get();
+
+        // Create new comment
+        taskService.createCommentEntity(commentDTO.text(), taskEntity, appUser);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
+    @GetMapping("api/tasks/{id}/comments")
+    public ResponseEntity<List<CommentResponseDTO>> getComments(
+            @PathVariable Long id
+    ) {
+        Optional<TaskEntity> optionalTaskEntity = taskService.getTaskEntityById(id);
+        if (optionalTaskEntity.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        TaskEntity taskEntity = optionalTaskEntity.get();
+        String task_id = taskEntity.getId().toString();
+        List<CommentEntity> commentEntities = new ArrayList<>(taskEntity.getComments().stream().toList());
+
+        List<CommentResponseDTO> commentResponseDTOS = new ArrayList<>();
+        for (CommentEntity commentEntity :commentEntities) {
+            String comment_id = commentEntity.getId().toString();
+            String author = commentEntity.getCommenter().getUsername();
+            commentResponseDTOS.add(
+                    new CommentResponseDTO(comment_id, task_id, commentEntity.getComment(), author)
+            );
+        }
+        List<CommentResponseDTO> mappedCommentResponseDTOS = commentResponseDTOS.stream()
+                .sorted(Comparator.comparing(CommentResponseDTO::id).reversed())
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(mappedCommentResponseDTOS);
     }
 }

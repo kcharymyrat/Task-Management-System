@@ -213,7 +213,7 @@ files:
   - name: src/taskmanagement/accounts/AppUserDetailsServiceImpl.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/423/stages/2459/implement#comment
+feedback_link: https://hyperskill.org/learn/step/40328#comment
 status: Solved
 feedback:
   message: Congratulations!

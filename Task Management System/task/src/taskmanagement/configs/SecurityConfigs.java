@@ -41,6 +41,8 @@ public class SecurityConfigs {
                         .requestMatchers("/api/accounts").permitAll()
                         .requestMatchers("/api/tasks", "/api/auth/token", "/api/tasks/{id}/assign").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/tasks/{id}/status").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/tasks/{id}/comments").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/tasks/{id}/comments").authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable) // allow modifying requests from tests
                 .sessionManagement(sessions ->

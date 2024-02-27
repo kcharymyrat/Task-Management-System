@@ -649,7 +649,7 @@ files:
   - name: src/taskmanagement/tasks/TaskResponseDTO.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/423/stages/2460/implement#comment
+feedback_link: https://hyperskill.org/learn/step/40329#comment
 status: Solved
 feedback:
   message: Congratulations!

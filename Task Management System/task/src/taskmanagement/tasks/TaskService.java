@@ -14,12 +14,34 @@ public class TaskService {
 
     private final AppUserRepository userRepository;
     private final TaskRepository taskRepository;
+    private final CommentsRepository commentsRepository;
 
     @Autowired
-    public TaskService(AppUserRepository userRepository, TaskRepository taskRepository) {
+    public TaskService(AppUserRepository userRepository, TaskRepository taskRepository, CommentsRepository commentsRepository) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+        this.commentsRepository = commentsRepository;
     }
+
+    public CommentEntity createCommentEntity(String commentText, TaskEntity taskEntity, AppUser appUser) {
+        String text = commentText.trim();
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setComment(text);
+        commentEntity.setTask(taskEntity);
+        commentEntity.setCommenter(appUser);
+        commentsRepository.save(commentEntity);
+
+        // Add CommentEntity for both TaskEntity and CommentEntity
+        taskEntity.addComment(commentEntity);
+        appUser.addComment(commentEntity);
+        taskRepository.save(taskEntity);
+        userRepository.save(appUser);
+
+        return commentEntity;
+    }
+
+
+
 
     @Transactional
     public Optional<TaskEntity> createTaskEntity(String title, String description, String username) {
@@ -55,10 +77,10 @@ public class TaskService {
         return taskEntity;
     }
 
-    public List<TaskResponseDTO> getAllTaskResponseDTOs() {
+    public List<TaskResponseGetDTO> getAllTaskResponseDTOs() {
         List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
-        List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
-                .map(this::taskEntityToTaskResponseDTO)
+        List<TaskResponseGetDTO> taskResponseDTOList = taskEntities.stream()
+                .map(this::taskEntityToTaskResponseGetDTO)
                 .collect(Collectors.toList());
 
         Collections.reverse(taskResponseDTOList);
@@ -66,12 +88,12 @@ public class TaskService {
         return taskResponseDTOList;
     }
 
-    public List<TaskResponseDTO> getAllTaskResponseDTOs(String author, String assignee) {
+    public List<TaskResponseGetDTO> getAllTaskResponseDTOs(String author, String assignee) {
         Optional<AppUser> optionalAuthorAppUser = userRepository.findByUsernameIgnoreCase(author.trim().toLowerCase());
         Optional<AppUser> optionalAssigneeAppUser = userRepository.findByUsernameIgnoreCase(assignee.trim().toLowerCase());
 
         if (optionalAuthorAppUser.isEmpty() || optionalAssigneeAppUser.isEmpty()) {
-            return new ArrayList<TaskResponseDTO>();
+            return new ArrayList<TaskResponseGetDTO>();
         }
 
         AppUser authorUser = optionalAuthorAppUser.get();
@@ -79,10 +101,10 @@ public class TaskService {
 
         List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
 
-        List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
+        List<TaskResponseGetDTO> taskResponseDTOList = taskEntities.stream()
                 .filter(task -> task.getAuthor().equals(authorUser))
                 .filter(task -> task.getAssignee() != null && task.getAssignee().equals(assigneeUser))
-                .map(this::taskEntityToTaskResponseDTO)
+                .map(this::taskEntityToTaskResponseGetDTO)
                 .collect(Collectors.toList());;
 
         Collections.reverse(taskResponseDTOList);
@@ -90,18 +112,18 @@ public class TaskService {
         return taskResponseDTOList;
     }
 
-    public List<TaskResponseDTO> getAllAssigneeTaskResponseDTOs(String assignee) {
+    public List<TaskResponseGetDTO> getAllAssigneeTaskResponseDTOs(String assignee) {
         Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(assignee.trim().toLowerCase());
         if (optionalAppUser.isEmpty()) {
-            return new ArrayList<TaskResponseDTO>();
+            return new ArrayList<TaskResponseGetDTO>();
         }
         AppUser user = optionalAppUser.get();
 
         List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
 
-        List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
+        List<TaskResponseGetDTO> taskResponseDTOList = taskEntities.stream()
                 .filter(task -> task.getAssignee() != null && task.getAssignee().equals(user))
-                .map(this::taskEntityToTaskResponseDTO)
+                .map(this::taskEntityToTaskResponseGetDTO)
                 .collect(Collectors.toList());;
 
         Collections.reverse(taskResponseDTOList);
@@ -110,18 +132,18 @@ public class TaskService {
     }
 
 
-    public List<TaskResponseDTO> getAllTaskResponseDTOs(String author) {
+    public List<TaskResponseGetDTO> getAllTaskResponseDTOs(String author) {
         Optional<AppUser> optionalAppUser = userRepository.findByUsernameIgnoreCase(author.trim().toLowerCase());
         if (optionalAppUser.isEmpty()) {
-            return new ArrayList<TaskResponseDTO>();
+            return new ArrayList<TaskResponseGetDTO>();
         }
         AppUser user = optionalAppUser.get();
 
         List<TaskEntity> taskEntities = (List<TaskEntity>) taskRepository.findAll();
 
-        List<TaskResponseDTO> taskResponseDTOList = taskEntities.stream()
+        List<TaskResponseGetDTO> taskResponseDTOList = taskEntities.stream()
                 .filter(task -> task.getAuthor().equals(user))
-                .map(this::taskEntityToTaskResponseDTO)
+                .map(this::taskEntityToTaskResponseGetDTO)
                 .collect(Collectors.toList());;
 
         Collections.reverse(taskResponseDTOList);
@@ -142,6 +164,23 @@ public class TaskService {
                 taskEntity.getStatus().toString(),
                 taskEntity.getAuthor().getUsername(),
                 assignee
+        );
+    }
+
+    public TaskResponseGetDTO taskEntityToTaskResponseGetDTO(TaskEntity taskEntity) {
+        String assignee = "none";
+        if (taskEntity.getAssignee() != null) {
+            assignee = taskEntity.getAssignee().getUsername();
+        }
+
+        return new TaskResponseGetDTO(
+                taskEntity.getId().toString(),
+                taskEntity.getTitle(),
+                taskEntity.getDescription(),
+                taskEntity.getStatus().toString(),
+                taskEntity.getAuthor().getUsername(),
+                assignee,
+                taskEntity.getComments().size()
         );
     }
 }

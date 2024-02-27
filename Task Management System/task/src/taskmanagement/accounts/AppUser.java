@@ -3,6 +3,7 @@ package taskmanagement.accounts;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import taskmanagement.tasks.CommentEntity;
 import taskmanagement.tasks.TaskEntity;
 
 import java.util.ArrayList;
@@ -27,12 +28,15 @@ public class AppUser {
     private String password;
     private String authority = "ROLE_USER";
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TaskEntity> tasks = new HashSet<>();
 
     @Column(name = "assigned_task")
-    @OneToMany(mappedBy = "assignee")
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TaskEntity> assignedTasks = new HashSet<>();
+
+    @OneToMany(mappedBy = "commenter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CommentEntity> comments = new HashSet<>();
 
     public AppUser() {
     }
@@ -80,5 +84,13 @@ public class AppUser {
 
     public void addAssignedTask(TaskEntity task) {
         this.assignedTasks.add(task);
+    }
+
+    public Set<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void addComment(CommentEntity commentEntity) {
+        this.comments.add(commentEntity);
     }
 }

@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import taskmanagement.accounts.AppUser;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "tasks")
 public class TaskEntity {
@@ -27,6 +30,9 @@ public class TaskEntity {
     @ManyToOne
     @JoinColumn(name = "assignee_id", nullable = true)
     private AppUser assignee;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CommentEntity> comments = new HashSet<>();
 
     public TaskEntity() {
     }
@@ -73,5 +79,13 @@ public class TaskEntity {
 
     public void setAssignee(AppUser assignee) {
         this.assignee = assignee;
+    }
+
+    public Set<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void addComment(CommentEntity commentEntity) {
+        this.comments.add(commentEntity);
     }
 }
